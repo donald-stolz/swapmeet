@@ -37,6 +37,14 @@ agent (avatar: `assets/johnny8.png`).
 - `guards/basic.md` — working-style defaults: communication, workflow,
   quality bar.
 
+## Design
+
+- `design/brand-spec.md` — brand and product reference: palette, fonts,
+  tone, iconography, listing card pattern. Read before any UI work.
+- `design/design-spec.md` — approved colors, typography and button rules,
+  including contrast constraints. Tokens live in `client/src/index.css`
+  (`@theme`); use them via Tailwind classes, don't hardcode hex values.
+
 ## Architecture
 
 - `server/` — Fastify API (Node, ESM). Port 3001. Endpoints:
