@@ -1,1 +1,46 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Permanent+Marker&family=Special+Elite&display=swap");
 @import "tailwindcss";
+
+/* Tokens from design/design-spec.md */
+@theme static {
+  --color-paper: #f3e9d8;
+  --color-chalk: #faf6ef;
+  --color-ink: #2b2621;
+  --color-terracotta: #c15b3d;
+  --color-teal: #3e7c74;
+  --color-plum: #6b3f5c;
+  --color-mustard: #e8a33d;
+  --color-coral: #f4623a;
+  --color-citrus: #a8c23b;
+  --color-border: rgb(43 38 33 / 0.15);
+  --color-focus: var(--color-plum);
+
+  --font-display: "Permanent Marker", "Marker Felt", cursive;
+  --font-sans: "Nunito", system-ui, sans-serif;
+  --font-stamp: "Special Elite", "Courier New", monospace;
+
+  --text-xs: 12px;
+  --text-sm: 14px;
+  --text-base: 16px;
+  --text-lg: 18px;
+  --text-2xl: 24px;
+  --text-3xl: 32px;
+  --text-5xl: 48px;
+
+  --radius-button: 8px;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    line-height: 1.5;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+}
