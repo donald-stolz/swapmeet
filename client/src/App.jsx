@@ -18,32 +18,36 @@ export default function App() {
   }, [])
 
   return (
-    <main style={{ fontFamily: 'sans-serif', maxWidth: 900, margin: '2rem auto', padding: '0 1rem' }}>
-      <h1>🛒 SwapMeet</h1>
-      <p>Local listings for people building something.</p>
+    <div className="min-h-screen bg-slate-50 text-slate-900">
+      <header className="bg-gradient-to-r from-emerald-600 to-teal-500 text-white shadow">
+        <div className="mx-auto max-w-4xl px-4 py-10">
+          <h1 className="text-4xl font-extrabold tracking-tight">🛒 SwapMeet</h1>
+          <p className="mt-2 text-lg text-emerald-50">Local listings for people building something.</p>
+        </div>
+      </header>
 
-      {error && <p style={{ color: 'crimson' }}>Failed to load listings: {error}</p>}
-      {!error && !listings && <p>Loading listings…</p>}
-
-      {listings && (
-        <>
-          <p>
-            <strong>{listings.length}</strong> listings live. Raw payload below — your job is to make
-            this beautiful.
+      <main className="mx-auto max-w-4xl px-4 py-8">
+        {error && (
+          <p className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-700">
+            Failed to load listings: {error}
           </p>
-          <pre
-            style={{
-              background: '#f4f4f4',
-              padding: '1rem',
-              borderRadius: 8,
-              overflowX: 'auto',
-              fontSize: 13
-            }}
-          >
-            {JSON.stringify(listings, null, 2)}
-          </pre>
-        </>
-      )}
-    </main>
+        )}
+        {!error && !listings && <p className="animate-pulse text-slate-500">Loading listings…</p>}
+
+        {listings && (
+          <>
+            <p className="mb-4 text-slate-600">
+              <span className="mr-2 inline-block rounded-full bg-emerald-100 px-3 py-1 text-sm font-semibold text-emerald-800">
+                {listings.length} live
+              </span>
+              Raw payload below — your job is to make this beautiful.
+            </p>
+            <pre className="overflow-x-auto rounded-xl bg-slate-900 p-4 text-[13px] leading-relaxed text-emerald-200 shadow-inner">
+              {JSON.stringify(listings, null, 2)}
+            </pre>
+          </>
+        )}
+      </main>
+    </div>
   )
 }
