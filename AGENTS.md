@@ -18,11 +18,19 @@ reliability; the human owns direction and approval.
 
 ## The product and repo
 
-- `server/` — Fastify API (Node, ESM), port 3001. Endpoints: `GET /api/health`,
-  `GET /api/listings`, `GET /api/listings/:id` (404 if unknown). Serves
-  `client/dist/` when a production build exists.
-- `client/` — React + Vite, dev server on 5173, proxies `/api` to the server.
-- `data/listings.json` — the datastore. No database.
+- `server/` — Fastify API in TypeScript (`server/src/`, run with `tsx`), port
+  3001. Endpoints: `GET /api/health`, `GET /api/listings` (`?category=<slug>`),
+  `GET /api/listings/:id` (404 if unknown), `GET /api/categories`,
+  `POST /api/listings` (201, or 400 with per-field errors). Serves `client/dist/`
+  when a production build exists.
+- `client/` — React + Vite + Tailwind v4 in TypeScript, dev server on 5173,
+  proxies `/api` to the server. Hash routes `#/`, `#/listings/:id`, `#/sell`.
+  `src/api/client.ts` is the only module that calls `fetch`. Style with tokens
+  only (`var(--token)`); `src/design-system/` is the verbatim hand-off — do not
+  edit it.
+- `data/listings.json` — the datastore. No database. `POST /api/listings` writes
+  to it, so restore it with `git checkout data/listings.json` before committing.
+- Type checks: `npm run typecheck -w server` and `npm run typecheck -w client`.
 - `./start.sh` — the single entry point (dev, and `./start.sh prod`). It prints
   `READY` only after both ends answer over HTTP. `SERVER_PORT` / `CLIENT_PORT`
   override ports.
