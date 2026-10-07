@@ -12,7 +12,7 @@ const pill =
   'rounded-[var(--radius-pill)] border-[length:var(--hairline)] border-solid px-4 py-2 ' +
   '[font-family:var(--font-sans)] text-sm font-bold cursor-pointer ' +
   'focus-visible:outline focus-visible:outline-[2.5px] focus-visible:outline-offset-2 focus-visible:outline-[var(--primary)]'
-const active = 'bg-[var(--primary)] text-[var(--on-primary)] border-[var(--primary)]'
+const active = 'bg-[var(--teal)] text-[var(--on-primary)] border-[var(--teal)]'
 const idle = 'bg-[var(--surface)] text-[var(--text)] border-[var(--line-strong)] hover:bg-[var(--panel)]'
 
 export function CategoryFilter({ categories, selected, onSelect }: CategoryFilterProps) {
