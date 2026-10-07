@@ -3,10 +3,11 @@
 A local classifieds marketplace for people building something — sell your
 espresso machine, buy a food-truck generator, start your lawn-care route.
 
-This is the **teaching app** for the Harness Engineering curriculum. It ships
-working-but-ugly on purpose: the landing page renders the raw JSON listings
-payload. Making it a real marketplace is the work — delivered one feature at
-a time by parallel agent lanes coordinated through GitHub Issues.
+This is the **teaching app** for the Harness Engineering curriculum. MVP v0.01
+(issue #1) is the core loop: browse listings as a card grid, filter by
+category, open a listing, and post a new one. It is styled with the received
+design system and has a Day/Night theme. Each feature is delivered by parallel
+agent lanes coordinated through GitHub Issues.
 
 ## Meet Johnny8
 
@@ -26,9 +27,29 @@ something smells wrong.
 
 ## Stack
 
-- **Server:** Node.js + Fastify (`server/`) — JSON file datastore, no database
-- **Client:** React + Vite (`client/`)
-- **Data:** `data/listings.json`
+- **Server:** TypeScript + Fastify (`server/src/`), run with `tsx`. JSON file
+  datastore, no database.
+- **Client:** TypeScript + React + Vite + Tailwind v4 (`client/src/`). Styling
+  uses design-system tokens only; the hand-off lives verbatim in
+  `client/src/design-system/`.
+- **Data:** `data/listings.json` — `POST /api/listings` writes to it at runtime.
+
+## Layout
+
+```
+server/src/
+  server.ts       routes, logging, static serving of client/dist
+  store.ts        loadListings(), appendListing() — serialized, atomic writes
+  validate.ts     NewListing validation, returns per-field errors
+  types.ts        Listing, Category, NewListing
+client/src/
+  App.tsx         layout shell + hash router (#/, #/listings/:id, #/sell)
+  api/            types.ts (contract types), client.ts (the only fetch caller)
+  pages/          BrowsePage, ListingPage, SellPage
+  components/     Header, ThemeToggle, CategoryFilter
+  lib/format.ts   price, condition, category and date formatting
+  design-system/  hand-off tokens + components, copied verbatim — do not edit
+```
 
 ## Quickstart
 
@@ -49,8 +70,11 @@ npm install     # once, from the repo root (npm workspaces)
 npm run dev     # server on :3001, client on :5173
 ```
 
-Open http://localhost:5173 — you should see the listing count and the raw
-payload. Check the server terminal: every API request is logged.
+Open http://localhost:5173 to see the listing grid. Check the server terminal:
+every API request is logged.
+
+Type-check either side with `npm run typecheck -w server` or
+`npm run typecheck -w client`.
 
 Production check:
 
@@ -81,5 +105,13 @@ that follow.
 | Endpoint | Returns |
 |----------|---------|
 | `GET /api/health` | `{ status: "ok" }` |
-| `GET /api/listings` | all listings |
+| `GET /api/listings` | all listings, newest `postedAt` first |
+| `GET /api/listings?category=<slug>` | listings in that category; `[]` if none |
 | `GET /api/listings/:id` | one listing, or 404 |
+| `GET /api/categories` | `{ slug, count }[]`, sorted by slug, derived from the data |
+| `POST /api/listings` | `201` with the created listing, or `400 { error, fields }` |
+
+The shapes and validation rules are the contracts in issue #1.
+
+Running a `POST` (by hand or in a test) changes `data/listings.json`. Restore
+the seed data before committing: `git checkout data/listings.json`.
