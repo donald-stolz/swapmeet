@@ -33,6 +33,18 @@ something smells wrong.
 ## Quickstart
 
 ```bash
+./start.sh      # installs deps if needed, then server on :3001 + client on :5173
+```
+
+`start.sh` is the single entry point: it checks Node 20+, installs
+workspace deps on first run, refuses to start if a port is taken (and names
+the process holding it), raises the open-file limit for Vite's watcher, and
+only prints `READY` after both ends answer over HTTP. Ctrl-C stops both.
+
+Override ports with `SERVER_PORT=3002 CLIENT_PORT=5174 ./start.sh`.
+Under the hood it runs the same npm scripts, which still work on their own:
+
+```bash
 npm install     # once, from the repo root (npm workspaces)
 npm run dev     # server on :3001, client on :5173
 ```
@@ -43,9 +55,10 @@ payload. Check the server terminal: every API request is logged.
 Production check:
 
 ```bash
-npm run build   # builds client into client/dist
-npm start       # Fastify serves API + built client on :3001
+./start.sh prod # builds client into client/dist, Fastify serves API + UI on :3001
 ```
+
+(equivalent to `npm run build && npm start`)
 
 ## How this repo is used in the curriculum
 
