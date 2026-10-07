@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react'
 // listings payload straight from the API. Turning this into a real listings
 // page is the feature you'll deliver using parallel lanes.
 export default function App() {
-  const [listings, setListings] = useState(null)
-  const [error, setError] = useState(null)
+  const [listings, setListings] = useState<unknown[] | null>(null)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     fetch('/api/listings')
@@ -14,7 +14,7 @@ export default function App() {
         return res.json()
       })
       .then(setListings)
-      .catch((err) => setError(err.message))
+      .catch((err: Error) => setError(err.message))
   }, [])
 
   return (
