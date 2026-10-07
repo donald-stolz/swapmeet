@@ -1,0 +1,50 @@
+{"count": 9, "category": null, "msg": "served listings"}
+{"id": "lst-010", "msg": "created listing"}
+{"count": 10, "category": null, "msg": "served listings"}
+{"count": 10, "category": null, "msg": "served listings"}
+{"count": 10, "category": null, "msg": "served listings"}
+{"count": 10, "category": null, "msg": "served listings"}
+{"count": 10, "category": null, "msg": "served listings"}
+{"count": 10, "category": null, "msg": "served listings"}
+{"count": 10, "category": null, "msg": "served listings"}
+{"count": 10, "category": null, "msg": "served listings"}
+{"count": 10, "category": null, "msg": "served listings"}
+{"count": 10, "category": null, "msg": "served listings"}
+{"count": 8, "category": null, "msg": "served listings"}
+{"count": 8, "category": null, "msg": "served listings"}
+{"count": 2, "category": "maker-tools", "msg": "served listings"}
+{"count": 1, "category": "events", "msg": "served listings"}
+{"count": 2, "category": "maker-tools", "msg": "served listings"}
+incoming GET /api/listings/lst-001
+incoming GET /api/listings/lst-001
+incoming GET /api/listings/nope
+  -> 404
+{"fields": ["title", "description", "seller", "location", "price", "category"], "msg": "rejected listing"}
+{"count": 8, "category": null, "msg": "served listings"}
+{"count": 8, "category": null, "msg": "served listings"}
+{"id": "lst-009", "msg": "created listing"}
+{"count": 9, "category": null, "msg": "served listings"}
+{"count": 9, "category": null, "msg": "served listings"}
+{"count": 9, "category": null, "msg": "served listings"}
+{"count": 9, "category": null, "msg": "served listings"}
+{"count": 2, "category": "maker-tools", "msg": "served listings"}
+{"count": 1, "category": "events", "msg": "served listings"}
+{"count": 2, "category": "maker-tools", "msg": "served listings"}
+incoming GET /api/listings/lst-001
+incoming GET /api/listings/lst-001
+incoming GET /api/listings/nope
+  -> 404
+{"fields": ["title", "description", "seller", "location", "price", "category"], "msg": "rejected listing"}
+{"count": 9, "category": null, "msg": "served listings"}
+{"count": 9, "category": null, "msg": "served listings"}
+{"id": "lst-010", "msg": "created listing"}
+{"count": 10, "category": null, "msg": "served listings"}
+{"count": 10, "category": null, "msg": "served listings"}
+{"count": 10, "category": null, "msg": "served listings"}
+{"count": 10, "category": null, "msg": "served listings"}
+{"count": 10, "category": null, "msg": "served listings"}
+{"count": 10, "category": null, "msg": "served listings"}
+{"count": 10, "category": null, "msg": "served listings"}
+{"count": 10, "category": null, "msg": "served listings"}
+{"count": 10, "category": null, "msg": "served listings"}
+{"count": 10, "category": null, "msg": "served listings"}
