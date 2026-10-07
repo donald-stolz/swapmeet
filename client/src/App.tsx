@@ -1,49 +1,53 @@
 import { useEffect, useState } from 'react'
+import { Header } from './components/Header'
+import { BrowsePage } from './pages/BrowsePage'
+import { ListingPage, NotFound } from './pages/ListingPage'
+import { SellPage } from './pages/SellPage'
 
-// v0: SwapMeet works, but it's not pretty. The landing page renders the raw
-// listings payload straight from the API. Turning this into a real listings
-// page is the feature you'll deliver using parallel lanes.
-export default function App() {
-  const [listings, setListings] = useState<unknown[] | null>(null)
-  const [error, setError] = useState<string | null>(null)
+// Hash routes: #/  #/listings/:id  #/sell. Hash routing keeps prod deep links
+// working with no server fallback route and no router dependency.
+type Route =
+  | { page: 'browse'; postedId?: string }
+  | { page: 'listing'; id: string }
+  | { page: 'sell' }
+  | { page: 'not-found'; path: string }
 
+function parseHash(hash: string): Route {
+  const [path, query = ''] = hash.replace(/^#/, '').split('?')
+  if (path === '' || path === '/') {
+    const postedId = new URLSearchParams(query).get('posted') ?? undefined
+    return { page: 'browse', postedId }
+  }
+  if (path === '/sell') return { page: 'sell' }
+  const match = /^\/listings\/([^/]+)$/.exec(path)
+  if (match) return { page: 'listing', id: decodeURIComponent(match[1]) }
+  return { page: 'not-found', path }
+}
+
+function useHashRoute(): Route {
+  const [route, setRoute] = useState(() => parseHash(window.location.hash))
   useEffect(() => {
-    fetch('/api/listings')
-      .then((res) => {
-        if (!res.ok) throw new Error(`API responded ${res.status}`)
-        return res.json()
-      })
-      .then(setListings)
-      .catch((err: Error) => setError(err.message))
+    const onChange = () => {
+      setRoute(parseHash(window.location.hash))
+      window.scrollTo(0, 0)
+    }
+    window.addEventListener('hashchange', onChange)
+    return () => window.removeEventListener('hashchange', onChange)
   }, [])
+  return route
+}
 
+export default function App() {
+  const route = useHashRoute()
   return (
-    <main style={{ fontFamily: 'sans-serif', maxWidth: 900, margin: '2rem auto', padding: '0 1rem' }}>
-      <h1>🛒 SwapMeet</h1>
-      <p>Local listings for people building something.</p>
-
-      {error && <p style={{ color: 'crimson' }}>Failed to load listings: {error}</p>}
-      {!error && !listings && <p>Loading listings…</p>}
-
-      {listings && (
-        <>
-          <p>
-            <strong>{listings.length}</strong> listings live. Raw payload below — your job is to make
-            this beautiful.
-          </p>
-          <pre
-            style={{
-              background: '#f4f4f4',
-              padding: '1rem',
-              borderRadius: 8,
-              overflowX: 'auto',
-              fontSize: 13
-            }}
-          >
-            {JSON.stringify(listings, null, 2)}
-          </pre>
-        </>
-      )}
-    </main>
+    <>
+      <Header />
+      <main className="mx-auto max-w-6xl px-4 py-8">
+        {route.page === 'browse' && <BrowsePage key={route.postedId ?? ''} postedId={route.postedId} />}
+        {route.page === 'listing' && <ListingPage id={route.id} />}
+        {route.page === 'sell' && <SellPage />}
+        {route.page === 'not-found' && <NotFound what={`Nothing lives at "${route.path}".`} />}
+      </main>
+    </>
   )
 }
