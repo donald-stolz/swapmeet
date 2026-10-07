@@ -25,7 +25,7 @@ export function ListingPage({ id }: { id: string }) {
   if (state.status === 'loading') return <p className="text-body text-[var(--text-soft)]">Loading listing…</p>
   if (state.status === 'error')
     return (
-      <p role="alert" className="text-body text-[var(--danger)]">
+      <p role="alert" className="text-body text-[var(--danger-ink)]">
         Couldn't load this listing: {state.message}
       </p>
     )

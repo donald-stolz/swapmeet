@@ -161,7 +161,7 @@ export function SellPage() {
 }
 
 function controlFor(error: string | undefined): string {
-  return `${control} ${error ? 'border-[var(--danger)]' : 'border-[var(--line-strong)]'}`
+  return `${control} ${error ? 'border-[var(--danger-ink)]' : 'border-[var(--line-strong)]'}`
 }
 
 interface FieldProps {
@@ -185,7 +185,7 @@ function Field({ id, label, hint, error, children }: FieldProps) {
         </p>
       )}
       {error && (
-        <p id={`${id}-error`} className="text-meta font-bold text-[var(--danger)]">
+        <p id={`${id}-error`} className="text-meta font-bold text-[var(--danger-ink)]">
           {error}
         </p>
       )}

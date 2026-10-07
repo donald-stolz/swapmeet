@@ -25,6 +25,7 @@ export function BrowsePage({ postedId }: BrowsePageProps) {
   useEffect(() => {
     let cancelled = false
     setListings(null)
+    setError(null)
     getListings(category ?? undefined)
       .then((data) => !cancelled && setListings(data))
       .catch((err: Error) => !cancelled && setError(err.message))
@@ -42,14 +43,16 @@ export function BrowsePage({ postedId }: BrowsePageProps) {
 
       {postedId && (
         <p role="status" className="text-body rounded-[var(--radius-md)] bg-[var(--secondary)] px-4 py-3 text-[var(--on-secondary)]">
-          Posted. Your listing is live — it's first in the grid.
+          {category === null
+            ? "Posted. Your listing is live — it's first in the grid."
+            : 'Posted. Your listing is live — pick All to see it first in the grid.'}
         </p>
       )}
 
       <CategoryFilter categories={categories} selected={category} onSelect={setCategory} />
 
       {error && (
-        <p role="alert" className="text-body text-[var(--danger)]">
+        <p role="alert" className="text-body text-[var(--danger-ink)]">
           Couldn't load listings: {error}
         </p>
       )}

@@ -9,3 +9,18 @@
     -webkit-font-smoothing: antialiased;
   }
 }
+
+/* Error text/borders. tokens.css has no Night override for --danger, and on the
+   dark surfaces it falls near 2:1. Night lifts it toward --text (about 4.9:1 on
+   --surface) without editing the hand-off. */
+:root {
+  --danger-ink: var(--danger);
+}
+:root[data-theme="dark"] {
+  --danger-ink: color-mix(in srgb, var(--danger), var(--text) 45%);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --danger-ink: color-mix(in srgb, var(--danger), var(--text) 45%);
+  }
+}
