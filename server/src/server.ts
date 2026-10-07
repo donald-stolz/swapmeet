@@ -6,8 +6,8 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
-const DATA_FILE = path.join(__dirname, '..', 'data', 'listings.json')
-const CLIENT_DIST = path.join(__dirname, '..', 'client', 'dist')
+const DATA_FILE = path.join(__dirname, '..', '..', 'data', 'listings.json')
+const CLIENT_DIST = path.join(__dirname, '..', '..', 'client', 'dist')
 
 const app = Fastify({ logger: true })
 
@@ -24,9 +24,9 @@ app.get('/api/listings', async (request) => {
   return listings
 })
 
-app.get('/api/listings/:id', async (request, reply) => {
+app.get<{ Params: { id: string } }>('/api/listings/:id', async (request, reply) => {
   const listings = await loadListings()
-  const listing = listings.find((l) => l.id === request.params.id)
+  const listing = listings.find((l: { id: string }) => l.id === request.params.id)
   if (!listing) {
     return reply.code(404).send({ error: 'Listing not found', id: request.params.id })
   }
